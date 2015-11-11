@@ -9,11 +9,12 @@ package simpledraw;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import visitor.ShapeVisitor;
 
 public class Line
 	extends Shape {
-	private Point myStart;
-	private Point myEnd;
+	private final Point myStart;
+	private final Point myEnd;
 
 	/**
 	 * Construct a line
@@ -25,6 +26,15 @@ public class Line
 		myEnd = end;
 	}
 
+        public Point getMyStart(){
+            return myStart;
+        }
+        
+        public Point getMyEnd(){
+            return myEnd;
+        }
+        
+        @Override
 	public void draw(Graphics2D g) {
 		g.setColor(
 			isSelected() ?
@@ -34,11 +44,13 @@ public class Line
 		g.drawLine(myStart.x, myStart.y, myEnd.x, myEnd.y);
 	}
 
+        @Override
 	public void translateBy(int dx, int dy) {
 		myStart.translate(dx, dy);
 		myEnd.translate(dx, dy);
 	}
 
+        @Override
 	public boolean isPickedBy(Point p) {
 		return Line.segmentIsPickedBy(myStart, myEnd, p);
 	}
@@ -72,4 +84,9 @@ public class Line
 		}
 		return (distance <= 2) && (lambda >= 0) && (lambda <= 1);
 	}
+
+    @Override
+    public void accept(ShapeVisitor sv) {
+        sv.visit(this);
+    }
 }

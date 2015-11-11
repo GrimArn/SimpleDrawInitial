@@ -7,9 +7,10 @@ package simpledraw;
  */
 import java.awt.Graphics2D;
 import java.awt.Point;
+import visitor.ShapeVisited;
 
 
-public abstract class Shape {
+public abstract class Shape implements ShapeVisited {
 	private boolean iAmSelected = false;
 	/**
 	 * Is this shape selected ?

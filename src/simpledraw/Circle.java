@@ -3,6 +3,7 @@ package simpledraw;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import visitor.ShapeVisitor;
 
 /**
  * A circle
@@ -10,8 +11,8 @@ import java.awt.Point;
 
 public class Circle
 	extends Shape {
-	private Point myCenter;
-	private int myRadius;
+	private final Point myCenter;
+	private final int myRadius;
 
 	/**
 	 * Construct a Circle
@@ -22,7 +23,16 @@ public class Circle
 		myCenter = center;
 		myRadius = radius;
 	}
+        
+        public Point getMyCenter(){
+            return myCenter;
+        }
+        
+        public int getMyRaduis(){
+            return myRadius;
+        }
 
+        @Override
 	public void draw(Graphics2D g) {
 		g.setColor(
 			isSelected() ?
@@ -36,11 +46,18 @@ public class Circle
 			);
 	}
 
+        @Override
 	public void translateBy(int dx, int dy) {
 		myCenter.translate(dx, dy);
 	}
 
+        @Override
 	public boolean isPickedBy(Point p) {
 		return (Math.abs(myCenter.distance(p) - myRadius) <= 2);
 	}
+
+    @Override
+    public void accept(ShapeVisitor sv) {
+        sv.visit(this);
+    }
 }

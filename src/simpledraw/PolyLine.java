@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import visitor.ShapeVisitor;
 
 public class PolyLine
 	extends Shape {
@@ -16,23 +17,27 @@ public class PolyLine
 	 * The points of this PolyLine
 	 */
 	private final List<Point> myPoints;
-
+        
 	public PolyLine(Collection<Point> points) {
 		if (points.size() < 2) {
 			throw new IllegalArgumentException(
 				"A PolyLine needs at least 2 Points");
 		}
-		myPoints = new ArrayList<Point>(points);
+		myPoints = new ArrayList<>(points);
 	}
+        
+        public List<Point> getmyPoints(){
+            return myPoints;
+        }
 
+        @Override
 	public void translateBy(int dx, int dy) {
-		Iterator i = myPoints.iterator();
-		while (i.hasNext()) {
-			Point p = (Point) i.next();
-			p.translate(dx, dy);
-		}
+            for (Point p : myPoints) {
+                p.translate(dx, dy);
+            }
 	}
 
+        @Override
 	public void draw(Graphics2D g) {
 		g.setColor(
 			isSelected() ?
@@ -51,6 +56,7 @@ public class PolyLine
 		while (points.hasNext());
 	}
 
+        @Override
 	public boolean isPickedBy(Point p) {
 		boolean result = false;
 		Iterator<Point> points = myPoints.iterator();
@@ -68,6 +74,11 @@ public class PolyLine
 
 		return result;
 	}
+
+    @Override
+    public void accept(ShapeVisitor sv) {
+        sv.visit(this);
+    }
 
 
 
