@@ -1,4 +1,4 @@
-package simpledraw;
+package simpledraw.controller;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -6,55 +6,59 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import simpledraw.model.DrawingModel;
+import simpledraw.view.DrawingPanel;
 
 /**
  * A Drawing tool in the drawing panel
  */
-
 public abstract class DrawingTool
-	implements KeyListener, MouseListener, MouseMotionListener {
-	DrawingPanel myPanel;
-        Drawing myDrawing;
+        implements KeyListener, MouseListener, MouseMotionListener {
 
-	DrawingTool(DrawingPanel panel) {
-		myPanel = panel;
-                myDrawing = panel.myDrawing;
-	}
+ 
+    //private final Drawing myDrawing;
+    protected final DrawingModel myModel;
+    protected final DrawingPanel myPanel;
 
-	/**
-	 * Draws this tool in the panel
-	 * @param g the graphics context to draw into
-	 */
-	abstract void draw(Graphics2D g);
+    public DrawingTool(DrawingModel m, DrawingPanel dp) {
+       // myDrawing = panel.getMyDrawing();
+        myModel = m;
+        myPanel = dp;
 
-	public void keyTyped(KeyEvent e) {
-	}
+    }
 
-	public void keyPressed(KeyEvent e) {
-	}
+    public abstract void draw(Graphics2D g);
+    
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
 
-	public void keyReleased(KeyEvent e) {
-	}
+    @Override
+    public void keyPressed(KeyEvent e) {
+            System.out.println("ciou");
+    }
 
-	public void mouseClicked(MouseEvent e) {
-	}
+    @Override
+    public void keyReleased(KeyEvent e) {}
 
-	public void mousePressed(MouseEvent e) {
-	}
+    @Override
+    public void mouseClicked(MouseEvent e) {}
 
-	public void mouseReleased(MouseEvent e) {
-	}
+    @Override
+    public void mousePressed(MouseEvent e) {}
 
-	public void mouseEntered(MouseEvent e) {
-		myPanel.requestFocus();
-	}
+    @Override
+    public void mouseReleased(MouseEvent e) {}
 
-	public void mouseExited(MouseEvent e) {
-	}
+    @Override
+    public void mouseEntered(MouseEvent e) {}
 
-	public void mouseDragged(MouseEvent e) {
-	}
+    @Override
+    public void mouseExited(MouseEvent e) {}
 
-	public void mouseMoved(MouseEvent e) {
-	}
+    @Override
+    public void mouseDragged(MouseEvent e) {}
+
+    @Override
+    public void mouseMoved(MouseEvent e) {}
 }

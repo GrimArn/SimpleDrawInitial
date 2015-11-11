@@ -1,5 +1,7 @@
-package simpledraw;
+package simpledraw.model;
 
+import simpledraw.model.Line;
+import simpledraw.model.Shape;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -16,7 +18,10 @@ public class PolyLine
 	 * The points of this PolyLine
 	 */
 	private final List<Point> myPoints;
-
+        public static final String TYPE = "POLYLINE";
+        
+        
+        
 	public PolyLine(Collection<Point> points) {
 		if (points.size() < 2) {
 			throw new IllegalArgumentException(
@@ -68,6 +73,11 @@ public class PolyLine
 
 		return result;
 	}
+
+    @Override
+    public String getType() {
+        return TYPE;
+    }
 
 
 

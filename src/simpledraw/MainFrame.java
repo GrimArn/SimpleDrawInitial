@@ -1,5 +1,6 @@
 package simpledraw;
 
+import simpledraw.view.DrawingPanel;
 import java.awt.AWTEvent;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -11,6 +12,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import simpledraw.model.DrawingModel;
+import simpledraw.view.MyTextView;
 
 /**
  * Main Frame of SimpleDraw
@@ -23,7 +26,8 @@ public class MainFrame
 	JToggleButton mySelectButton = new JToggleButton("Select");
 	JToggleButton myLineButton = new JToggleButton("Line");
 	JToggleButton myCircleButton = new JToggleButton("Circle");
-	DrawingPanel myDrawingPanel = new DrawingPanel();
+        DrawingModel myDrawingModel = new DrawingModel();
+	DrawingPanel myDrawingPanel = new DrawingPanel(myDrawingModel);
 
 	/**Construct the frame*/
 	public MainFrame() {
@@ -35,11 +39,11 @@ public class MainFrame
 			e.printStackTrace();
 		}
 	}
-
 	/**Component initialization*/
 	private void jbInit() throws Exception {
 		getContentPane().setLayout(new BorderLayout());
 		JPanel buttonPanel = new JPanel();
+                MyTextView textView = new MyTextView(myDrawingModel);
 		buttonPanel.setLayout(new FlowLayout());
 
 		mySelectButton.setSelected(true);
@@ -52,7 +56,7 @@ public class MainFrame
 		buttonPanel.add(myLineButton, null);
 		buttonPanel.add(myCircleButton, null);
 		getContentPane().add(myDrawingPanel, BorderLayout.CENTER);
-
+                getContentPane().add(textView, BorderLayout.SOUTH);
 		ButtonGroup buttonGroup = new ButtonGroup();
 		buttonGroup.add(mySelectButton);
 		buttonGroup.add(myLineButton);

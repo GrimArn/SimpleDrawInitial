@@ -1,5 +1,6 @@
 package simpledraw;
 
+import simpledraw.view.DrawingPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -9,6 +10,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JApplet;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import simpledraw.model.DrawingModel;
 
 /**
  * SimpleDraw, applet version
@@ -21,10 +23,11 @@ public class DrawApplet
 	JToggleButton mySelectButton = new JToggleButton("Select");
 	JToggleButton myLineButton = new JToggleButton("Line");
 	JToggleButton myCircleButton = new JToggleButton("Circle");
-	DrawingPanel myDrawingPanel = new DrawingPanel();
+	DrawingPanel myDrawingPanel;
 
 	/**Construct the applet*/
 	public DrawApplet() {
+            myDrawingPanel = new DrawingPanel(new DrawingModel());
 	}
 
 	/**Initialize the applet*/

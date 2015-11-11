@@ -1,4 +1,4 @@
-package simpledraw;
+package simpledraw.model;
 
 /**
  * The Shape abstract class, super-class of all Shapes
@@ -46,4 +46,6 @@ public abstract class Shape {
 	 * @return true if <code>p</code> inside the shape, false otherwise
 	 */
 	abstract public boolean isPickedBy(Point p);
+        
+        abstract public String getType();
 }
