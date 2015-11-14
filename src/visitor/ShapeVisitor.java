@@ -5,9 +5,9 @@
  */
 package visitor;
 
-import simpledraw.Circle;
-import simpledraw.Line;
-import simpledraw.PolyLine;
+import simpledraw.model.Circle;
+import simpledraw.model.Line;
+import simpledraw.model.PolyLine;
 
 /**
  * 

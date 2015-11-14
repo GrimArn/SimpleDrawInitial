@@ -1,4 +1,4 @@
-package simpledraw;
+package simpledraw.model;
 
 /**
  * A Segement of a line, that extends between two points
@@ -15,6 +15,8 @@ public class Line
 	extends Shape {
 	private final Point myStart;
 	private final Point myEnd;
+        public static final String TYPE = "LINE";
+        private String myType = TYPE;
 
 	/**
 	 * Construct a line
@@ -88,5 +90,9 @@ public class Line
     @Override
     public void accept(ShapeVisitor sv) {
         sv.visit(this);
+    }
+    
+    public String getType() {
+        return TYPE;
     }
 }

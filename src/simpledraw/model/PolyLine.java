@@ -1,4 +1,4 @@
-package simpledraw;
+package simpledraw.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,7 +8,6 @@ import java.util.List;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import visitor.ShapeVisitor;
 
 public class PolyLine
@@ -17,8 +16,9 @@ public class PolyLine
 	 * The points of this PolyLine
 	 */
 	private final List<Point> myPoints;
+        public static final String TYPE = "POLYLINE";
         
-	public PolyLine(Collection<Point> points) {
+        public PolyLine(Collection<Point> points) {
 		if (points.size() < 2) {
 			throw new IllegalArgumentException(
 				"A PolyLine needs at least 2 Points");
@@ -78,6 +78,10 @@ public class PolyLine
     @Override
     public void accept(ShapeVisitor sv) {
         sv.visit(this);
+    }
+        
+    public String getType() {
+        return TYPE;
     }
 
 
