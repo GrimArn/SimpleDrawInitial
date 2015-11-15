@@ -1,5 +1,6 @@
 package controllers;
 
+import composit.GroupShape;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -18,8 +19,10 @@ import model.DrawingModel;
 public class SelectionTool
         extends DrawingTool {
 
-    private Shape mySelectedShape = null;
+    private GroupShape mySelectedShapes = null;
     private Point myLastPoint;
+
+    private boolean controlPressed = false;
 
     public SelectionTool(DrawingModel drawingModel, DrawingPanel drawingPanel) {
         super(drawingModel, drawingPanel);
@@ -27,24 +30,70 @@ public class SelectionTool
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyChar() == KeyEvent.VK_DELETE) {
-            if (mySelectedShape != null) {
-                myModel.deleteShape(mySelectedShape);
+        if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+            controlPressed = true;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+            if (mySelectedShapes != null) {
+                for (Shape s : mySelectedShapes.getShapes()){
+                    myModel.deleteShape(s);
+                }
             }
         }
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-        Shape pickedShape = myModel.pickShapeAt(e.getPoint());
-        myLastPoint = e.getPoint();
-        if (mySelectedShape != null) {
-            myModel.selectShape(mySelectedShape, false);
+    public void keyReleased(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+            controlPressed = false;
         }
-        mySelectedShape = pickedShape;
-        if (mySelectedShape != null) {
-            myPanel.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
-            myModel.selectShape(mySelectedShape, true);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        Shape pickedBy = myModel.pickShapeAt(e.getPoint());
+        myLastPoint = e.getPoint();
+        if (controlPressed) {
+            if (mySelectedShapes != null) {
+                if (pickedBy != null) {
+                    if (mySelectedShapes.isAlreadyGrouped(pickedBy)) {
+                        mySelectedShapes.removeShape(pickedBy);
+                        myPanel.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+                        myModel.selectShape(pickedBy, false);
+                    } else {
+                        mySelectedShapes.addShape(pickedBy);
+                        myPanel.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+                        myModel.selectShape(mySelectedShapes, true);
+                    }
+                }
+            } else {
+                if (pickedBy != null) {
+                    mySelectedShapes = new GroupShape();
+                    mySelectedShapes.addShape(pickedBy);
+                    myPanel.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+                    myModel.selectShape(mySelectedShapes, true);
+                }
+            }
+        } else {
+            if (mySelectedShapes != null) {
+                if (pickedBy != null) {
+                    myModel.selectShape(mySelectedShapes, false);
+                    mySelectedShapes = new GroupShape();
+                    mySelectedShapes.addShape(pickedBy);
+                    myPanel.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+                    myModel.selectShape(mySelectedShapes, true);
+                } else {
+                    myModel.selectShape(mySelectedShapes, false);
+                    mySelectedShapes = null;
+                }
+            } else {
+                if (pickedBy != null) {
+                    mySelectedShapes = new GroupShape();
+                    mySelectedShapes.addShape(pickedBy);
+                    myPanel.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+                    myModel.selectShape(mySelectedShapes, true);
+                }
+            }
         }
     }
 
@@ -66,8 +115,8 @@ public class SelectionTool
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (mySelectedShape != null) {
-            myModel.translateShape(mySelectedShape,
+        if (mySelectedShapes != null) {
+            myModel.translateShape(mySelectedShapes,
                     e.getX() - myLastPoint.x,
                     e.getY() - myLastPoint.y
             );
@@ -76,6 +125,17 @@ public class SelectionTool
     }
 
     @Override
-    public void draw(Graphics2D g) {}
+    public void draw(Graphics2D g) {
+    }
+    
+    public void unselectAll(){
+        if(mySelectedShapes != null){
+            myModel.selectShape(mySelectedShapes, false);
+            mySelectedShapes = null;
+            controlPressed = false;
+        } else {
+            controlPressed = false;
+        }
+    }
 
 }

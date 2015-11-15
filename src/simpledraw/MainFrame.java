@@ -99,6 +99,7 @@ public class MainFrame
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         myDrawingPanel.setDrawingTool(myLineTool);
+                        mySelectionTool.unselectAll();
                     }
                 }
         );
@@ -108,6 +109,7 @@ public class MainFrame
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         myDrawingPanel.setDrawingTool(myCircleTool);
+                        mySelectionTool.unselectAll();
                     }
                 }
         );

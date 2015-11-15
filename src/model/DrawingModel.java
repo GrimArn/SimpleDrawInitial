@@ -72,7 +72,7 @@ public interface DrawingModel {
      *
      */
     void deleteShape(Shape shape);
-
+    
     /**
      * Select or unselect a shape from the Drawing
      *
@@ -80,7 +80,7 @@ public interface DrawingModel {
      * @param isSelected select or unselect
      */
     void selectShape(Shape shape, boolean isSelected);
-
+    
     /**
      * Translate a shape from Drawing
      *

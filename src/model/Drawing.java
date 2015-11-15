@@ -10,7 +10,6 @@ package model;
 import composit.Shape;
 import java.util.*;
 
-import java.awt.Graphics2D;
 import java.awt.Point;
 import views.DrawingView;
 
@@ -74,19 +73,19 @@ public class Drawing implements DrawingModel {
         myShapes.remove(s);
         notifyViews();
     }
-    
+
     @Override
     public void selectShape(Shape shape, boolean isSelected) {
         shape.setSelected(isSelected);
         notifyViews();
     }
-
+    
     @Override
     public void translateShape(Shape shape, int dx, int dy) {
         shape.translateBy(dx, dy);
         notifyViews();
     }
-    
+
     @Override
     public void notifyViews(){
         for(DrawingView dv : myViews){
