@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import model.Drawing;
 import model.DrawingModel;
+import views.InfoPanel;
 
 /**
  * Main Frame of SimpleDraw
@@ -31,6 +32,7 @@ public class MainFrame
     JToggleButton myLineButton = new JToggleButton("Line");
     JToggleButton myCircleButton = new JToggleButton("Circle");
     DrawingModel myDrawingModel;
+    InfoPanel myInfoPanel;
     DrawingPanel myDrawingPanel;
     CircleTool myCircleTool;
     LineTool myLineTool;
@@ -42,7 +44,9 @@ public class MainFrame
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);
         myDrawingModel = new Drawing();
         myDrawingPanel = new DrawingPanel();
+        myInfoPanel = new InfoPanel();
         myDrawingModel.addView(myDrawingPanel);
+        myDrawingModel.addView(myInfoPanel);
         myCircleTool = new CircleTool(myDrawingModel, myDrawingPanel);
         myLineTool = new LineTool(myDrawingModel, myDrawingPanel);
         mySelectionTool = new SelectionTool(myDrawingModel, myDrawingPanel);
@@ -71,7 +75,8 @@ public class MainFrame
         buttonPanel.add(myLineButton, null);
         buttonPanel.add(myCircleButton, null);
         getContentPane().add(myDrawingPanel, BorderLayout.CENTER);
-
+        getContentPane().add(myInfoPanel, BorderLayout.SOUTH);
+        
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(mySelectButton);
         buttonGroup.add(myLineButton);

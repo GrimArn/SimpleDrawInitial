@@ -38,6 +38,9 @@ public class SelectionTool
     public void mousePressed(MouseEvent e) {
         Shape pickedShape = myModel.pickShapeAt(e.getPoint());
         myLastPoint = e.getPoint();
+        if (mySelectedShape != null) {
+            myModel.selectShape(mySelectedShape, false);
+        }
         mySelectedShape = pickedShape;
         if (mySelectedShape != null) {
             myPanel.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
@@ -47,9 +50,6 @@ public class SelectionTool
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (mySelectedShape != null) {
-            myModel.selectShape(mySelectedShape, false);
-        }
         mouseMoved(e);
     }
 

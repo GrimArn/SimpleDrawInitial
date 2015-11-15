@@ -47,7 +47,6 @@ public class DrawingPanel
     
     @Override
     public void paintComponent(Graphics g){
-        System.out.println("DEBUG : PAINT");
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
