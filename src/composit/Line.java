@@ -1,4 +1,4 @@
-package simpledraw;
+package composit;
 
 /**
  * A Segement of a line, that extends between two points

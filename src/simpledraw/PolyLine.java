@@ -1,5 +1,7 @@
 package simpledraw;
 
+import composit.Line;
+import composit.Shape;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;

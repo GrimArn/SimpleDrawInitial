@@ -1,4 +1,4 @@
-package simpledraw;
+package composit;
 
 /**
  * The Shape abstract class, super-class of all Shapes

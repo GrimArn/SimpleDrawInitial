@@ -1,16 +1,19 @@
-package simpledraw;
+package controllers;
 
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import views.DrawingPanel;
+import composit.Line;
+import model.DrawingModel;
 
 /**
  * The tool to create Lines
  * @author Rémi Bastide
  * @version 1.0
- * @see simpledraw.Line
+ * @see composit.Line
  */
 
 public class LineTool
@@ -19,8 +22,8 @@ public class LineTool
 	private Point myInitialPoint;
 	private Point myFinalPoint;
 
-	public LineTool(DrawingPanel panel) {
-		super(panel);
+	public LineTool(DrawingModel drawingModel, DrawingPanel drawingPanel) {
+		super(drawingModel, drawingPanel);
 	}
 
         @Override
@@ -36,11 +39,10 @@ public class LineTool
 		} else {
 			// Second point
 			iAmActive = false;
-			myDrawing.addShape(
+			myPanel.setCursor(Cursor.getDefaultCursor());
+			myModel.createShape(
 				new Line(myInitialPoint, myFinalPoint)
 				);
-			myPanel.setCursor(Cursor.getDefaultCursor());
-			myPanel.repaint();
 		}
 	}
 
@@ -58,7 +60,7 @@ public class LineTool
         }
         
         @Override
-	void draw(Graphics2D g) {
+	public void draw(Graphics2D g) {
 		if (iAmActive) {
 			g.setColor(Color.red);
 			g.drawLine(
