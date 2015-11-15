@@ -12,12 +12,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import model.Drawing;
 import model.DrawingModel;
 import views.InfoPanel;
+import visitors.XmlSaver;
 
 /**
  * Main Frame of SimpleDraw
@@ -31,6 +33,8 @@ public class MainFrame
     JToggleButton mySelectButton = new JToggleButton("Select");
     JToggleButton myLineButton = new JToggleButton("Line");
     JToggleButton myCircleButton = new JToggleButton("Circle");
+    JButton myXMLSaverButton = new JButton("XML Saver");
+    XmlSaver myXmlSaver;
     DrawingModel myDrawingModel;
     InfoPanel myInfoPanel;
     DrawingPanel myDrawingPanel;
@@ -45,6 +49,7 @@ public class MainFrame
         myDrawingModel = new Drawing();
         myDrawingPanel = new DrawingPanel();
         myInfoPanel = new InfoPanel();
+        myXmlSaver = new XmlSaver(myDrawingModel);
         myDrawingModel.addView(myDrawingPanel);
         myDrawingModel.addView(myInfoPanel);
         myCircleTool = new CircleTool(myDrawingModel, myDrawingPanel);
@@ -74,6 +79,7 @@ public class MainFrame
         buttonPanel.add(mySelectButton, null);
         buttonPanel.add(myLineButton, null);
         buttonPanel.add(myCircleButton, null);
+        buttonPanel.add(myXMLSaverButton, null);
         getContentPane().add(myDrawingPanel, BorderLayout.CENTER);
         getContentPane().add(myInfoPanel, BorderLayout.SOUTH);
         
@@ -113,6 +119,14 @@ public class MainFrame
                     }
                 }
         );
+        
+        myXMLSaverButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                myXmlSaver.saveMyModel();
+            }
+        });
     }
 
     /**

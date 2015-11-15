@@ -7,6 +7,7 @@ package composit;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import visitors.ShapeVisitor;
 
 /**
  *
@@ -50,5 +51,10 @@ public class GroupShape extends CompositeShape {
             }
         }
         return false;
+    }
+
+    @Override
+    public void accept(ShapeVisitor shapeVisitor) {
+        shapeVisitor.visit(this);
     }
 }
